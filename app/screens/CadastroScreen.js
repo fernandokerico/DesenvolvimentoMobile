@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { View, TextInput, Button, Text } from 'react-native';
-import { auth, db } from '../services/firebaseConfig';
+import { auth, db } from '../services/firebaseConfig'; // CORRIGIDO
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
+
 
 export default function CadastroScreen({ navigation }) {
   const [email, setEmail] = useState('');

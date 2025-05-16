@@ -18,4 +18,8 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-export { firebase };
+// 🔥 Exporte os serviços que você for usar
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+export { firebase, auth, db };

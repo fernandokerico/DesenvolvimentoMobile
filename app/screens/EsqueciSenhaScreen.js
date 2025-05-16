@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { View, TextInput, Button, Text } from 'react-native';
-import { auth } from '../services/firebaseConfig';
+import { auth } from '../services/firebaseConfig'; // CORRIGIDO
 import { sendPasswordResetEmail } from 'firebase/auth';
+
 
 export default function EsqueciSenhaScreen({ navigation }) {
   const [email, setEmail] = useState('');

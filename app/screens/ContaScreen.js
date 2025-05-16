@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
-import { auth, db } from '../services/firebaseConfig';
+import { auth, db } from '../services/firebaseConfig'; // CORRIGIDO
 import { doc, getDoc } from 'firebase/firestore';
-import { firebase } from '../services/firebaseConfig';
+
 
 
 export default function ContaScreen() {

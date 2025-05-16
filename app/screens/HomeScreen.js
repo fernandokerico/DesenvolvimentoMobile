@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, TouchableOpacity } from 'react-native';
-import { auth, db } from '../services/firebaseConfig';
+import { auth, db } from '../services/firebaseConfig'; // CORRIGIDO
 import { collection, addDoc, query, where, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
+
 
 export default function HomeScreen({ navigation }) {
   const [descricao, setDescricao] = useState('');
