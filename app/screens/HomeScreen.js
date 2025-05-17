@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList, TouchableOpacity } from 'react-native';
-import { auth, db } from '../services/firebaseConfig'; // CORRIGIDO
+import { View, Text, TextInput, FlatList, TouchableOpacity } from 'react-native';
+import { auth, db } from '../services/firebaseConfig';
 import { collection, addDoc, query, where, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
+import CustomInput from '../components/CustomInputs';
+import Button from '../components/Buttons';
 
 
 export default function HomeScreen({ navigation }) {
@@ -16,10 +18,10 @@ export default function HomeScreen({ navigation }) {
     const q = query(gastosRef, where('userId', '==', auth.currentUser.uid));
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const lista = [];
-      snapshot.forEach((doc) => {
-        lista.push({ id: doc.id, ...doc.data() });
-      });
+      const lista = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }));
       setGastos(lista);
     });
 
@@ -30,16 +32,13 @@ export default function HomeScreen({ navigation }) {
     if (!descricao || !valor) return;
 
     if (editandoId) {
-      // Editar gasto
-      const gastoRef = doc(db, 'gastos', editandoId);
-      await updateDoc(gastoRef, {
+      await updateDoc(doc(db, 'gastos', editandoId), {
         descricao,
         valor,
         data: new Date()
       });
       setEditandoId(null);
     } else {
-      // Adicionar novo gasto
       await addDoc(collection(db, 'gastos'), {
         descricao,
         valor,
@@ -70,17 +69,8 @@ export default function HomeScreen({ navigation }) {
   return (
     <View>
       <Text>Adicionar ou Editar Gasto</Text>
-      <TextInput
-        placeholder="Descrição"
-        value={descricao}
-        onChangeText={setDescricao}
-      />
-      <TextInput
-        placeholder="Valor"
-        value={valor}
-        onChangeText={setValor}
-        keyboardType="numeric"
-      />
+      <CustomInput placeholder="Descrição" value={descricao} onChangeText={setDescricao} />
+      <CustomInput placeholder="Valor" value={valor} onChangeText={setValor} keyboardType="numeric" />
       <Button title={editandoId ? "Salvar Edição" : "Adicionar"} onPress={handleSalvar} />
 
       <FlatList

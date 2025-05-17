@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, FlatList } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { getGastos, addGasto, deleteGasto } from '../services/firestoreService'; // CORRIGIDO
+import CustomInput from '../components/CustomInputs';
+import Button from '../components/Buttons';
+
 
 
 const GastosScreen = () => {

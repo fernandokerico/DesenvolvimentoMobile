@@ -48,3 +48,4 @@ export const deleteGasto = (id) => {
       throw error.message;
     });
 };
+

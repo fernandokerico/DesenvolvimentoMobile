@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { View, TextInput, Button, Text } from 'react-native';
-import { auth } from '../services/firebaseConfig'; // CORRIGIDO
+import { View, TextInput, Text } from 'react-native';
+import { auth } from '../services/firebaseConfig';
 import { sendPasswordResetEmail } from 'firebase/auth';
-
+import CustomInput from '../components/CustomInputs';
+import Button from '../components/Buttons';
 
 export default function EsqueciSenhaScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -12,14 +13,14 @@ export default function EsqueciSenhaScreen({ navigation }) {
     try {
       await sendPasswordResetEmail(auth, email);
       setMensagem('Email de recuperação enviado!');
-    } catch (error) {
+    } catch {
       setMensagem('Erro ao enviar email.');
     }
   };
 
   return (
     <View>
-      <TextInput
+      <CustomInput
         placeholder="Digite seu email"
         value={email}
         onChangeText={setEmail}

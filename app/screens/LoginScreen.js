@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { View, TextInput, Button, Text } from 'react-native';
-import { auth } from '../services/firebaseConfig'; // CORRIGIDO
+import { View, TextInput, Text } from 'react-native';
+import { auth } from '../services/firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import CustomInput from '../components/CustomInputs';
+import Button from '../components/Buttons';
 
 
 export default function LoginScreen({ navigation }) {
@@ -14,13 +16,13 @@ export default function LoginScreen({ navigation }) {
       .then(() => {
         navigation.navigate('Home');
       })
-      .catch((error) => setErro('Email ou senha inválidos'));
+      .catch(() => setErro('Email ou senha inválidos'));
   };
 
   return (
     <View>
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
-      <TextInput placeholder="Senha" secureTextEntry value={senha} onChangeText={setSenha} />
+      <CustomInput placeholder="Email" value={email} onChangeText={setEmail} />
+      <CustomInput placeholder="Senha" secureTextEntry value={senha} onChangeText={setSenha} />
       <Button title="Entrar" onPress={handleLogin} />
       {erro ? <Text>{erro}</Text> : null}
       <Button title="Cadastrar" onPress={() => navigation.navigate('Cadastro')} />

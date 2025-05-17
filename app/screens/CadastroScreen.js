@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { View, TextInput, Button, Text } from 'react-native';
-import { auth, db } from '../services/firebaseConfig'; // CORRIGIDO
+import { View, Text as RNText } from 'react-native';
+import { auth, db } from '../services/firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-
+import CustomInput from '../components/CustomInputs';
+import Button from '../components/Buttons'; // seu botão personalizado
 
 export default function CadastroScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -20,23 +21,24 @@ export default function CadastroScreen({ navigation }) {
       await setDoc(doc(db, 'usuarios', user.uid), {
         nome,
         telefone,
-        email
+        email,
       });
 
       navigation.navigate('Login');
     } catch (error) {
+      console.error(error); // ajuda na depuração
       setErro('Erro ao cadastrar');
     }
   };
 
   return (
     <View>
-      <TextInput placeholder="Nome" value={nome} onChangeText={setNome} />
-      <TextInput placeholder="Telefone" value={telefone} onChangeText={setTelefone} />
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
-      <TextInput placeholder="Senha" secureTextEntry value={senha} onChangeText={setSenha} />
+      <CustomInput placeholder="Nome" value={nome} onChangeText={setNome} />
+      <CustomInput placeholder="Telefone" value={telefone} onChangeText={setTelefone} />
+      <CustomInput placeholder="Email" value={email} onChangeText={setEmail} />
+      <CustomInput placeholder="Senha" secureTextEntry value={senha} onChangeText={setSenha} />
       <Button title="Cadastrar" onPress={handleCadastro} />
-      {erro ? <Text>{erro}</Text> : null}
+      {erro ? <RNText>{erro}</RNText> : null}
     </View>
   );
 }
